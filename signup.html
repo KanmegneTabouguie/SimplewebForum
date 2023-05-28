@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="images/x-icon" href="https://t3.ftcdn.net/jpg/03/01/66/64/240_F_301666459_phdSN1UmsszQzMZPDpl2WQ96uGqfNmH3.jpg" />
+	<title>SignUp Forum</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+		h1 {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #333333;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            color: #555555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #f2f2f2;
+            color: #333333;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff3366;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e6005c;
+        }
+    </style>
+
+
+
+</head>
+<body>
+	<h1>Sign Up</h1>
+	<form method="post" action="/signup">
+		<label>Username:</label><br>
+		<input type="text" name="uname"><br>
+		<label>Email:</label><br>
+		<input type="email" name="email"><br>
+		<label>Password:</label><br>
+		<input type="password" name="password"><br>
+		<input type="submit" value="Sign Up">
+	</form>
+</body>
+</html>

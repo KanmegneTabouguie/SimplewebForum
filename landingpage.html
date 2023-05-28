@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="images/x-icon" href="https://t3.ftcdn.net/jpg/03/01/66/64/240_F_301666459_phdSN1UmsszQzMZPDpl2WQ96uGqfNmH3.jpg" />
+    <title>Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333333;
+            padding: 20px;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+
+        }
+
+
+        nav ul li a:hover {
+            background-color: #555555;
+        }
+
+
+        .banner {
+            background-image: url('https://thumbs.dreamstime.com/b/forum-special-blue-banner-background-isolated-abstract-illustration-127881690.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            opacity: 0;
+            transform: translateY(-100%);
+            animation: slideIn 1s ease-in-out forwards;
+        }
+
+
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+
+        .banner-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .banner p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333333;
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .action-buttons a:last-child {
+            margin-right: 0;
+        }
+
+        .action-buttons a:hover {
+            background-color: #555555;
+        }
+
+        footer {
+            background-color: #333333;
+            padding: 20px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .banner {
+                height: 300px;
+            }
+
+            .banner h1 {
+                font-size: 36px;
+            }
+
+            .banner p {
+                font-size: 16px;
+            }
+
+            .action-buttons a {
+                padding: 8px 16px;
+            }
+        }
+
+        .banner p {
+        font-size: 20px;
+        margin-bottom: 30px;
+        width: 80%;
+        margin: 0 auto;
+        color: #FFFF00;
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Forum</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="/readonly">Posts</a></li>
+                <li><a href="/servicePageHandler">Services</a></li>
+                <li><a href="/contactPageHandler">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <h1>Welcome to Our Website</h1>
+            <p>Welcome to our vibrant forum community, where ideas come alive through engaging discussions and meaningful interactions. Join us to connect with like-minded individuals, share knowledge, and explore a wide range of topics. Discover a platform that fosters intellectual growth, collaboration, and the exchange of diverse perspectives. Start your journey with us today!</p>
+            <div class="action-buttons">
+                <a href="/login">Login</a>
+                <a href="/signup">Register</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2023 Your Company. All rights reserved.
+    </footer>
+</body>
+</html>

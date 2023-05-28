@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="images/x-icon" href="https://t3.ftcdn.net/jpg/03/01/66/64/240_F_301666459_phdSN1UmsszQzMZPDpl2WQ96uGqfNmH3.jpg" />
+    <title>ForumPostReview</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        margin: 0;
+        color: #333;
+        font-size: 18px;
+    }
+
+    p {
+        margin: 10px 0;
+        color: #666;
+    }
+
+    h4 {
+        margin: 10px 0;
+        color: #333;
+        font-size: 16px;
+    }
+
+    ul.comments {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+    }
+
+    ul.comments li {
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+        color: #333;
+        cursor: not-allowed;
+        font-size: 14px;
+    }
+
+    button:disabled {
+        cursor: not-allowed;
+    }
+
+    /* Additional Styles */
+    body {
+        background-color: #f5f5f5;
+    }
+
+    li {
+        background-color: #ffffff;
+        border: 1px solid #e6e6e6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        color: #333333;
+        font-size: 20px;
+    }
+
+    p {
+        color: #666666;
+    }
+
+    ul.comments li {
+        color: #999999;
+    }
+
+    button {
+        color: #333333;
+        font-size: 16px;
+    }
+</style>
+
+<body>
+    <h2>Latest Posts:</h2>
+    <ul>
+        {{range .Posts}}
+        <li>
+            <h3>{{.Title}}</h3>
+            <p>{{.Content}}</p>
+
+            <h4>Comments:</h4>
+            <ul>
+                {{range .Comments}}
+                <li>{{.Content}}</li>
+                {{end}}
+            </ul>
+
+            <button disabled>{{.LikeCount}} Likes</button>
+            <button disabled>{{.DislikeCount}} Dislikes</button>
+        </li>
+        {{end}}
+    </ul>
+</body>
+</html>

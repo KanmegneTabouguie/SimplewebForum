@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="images/x-icon" href="https://t3.ftcdn.net/jpg/03/01/66/64/240_F_301666459_phdSN1UmsszQzMZPDpl2WQ96uGqfNmH3.jpg" />
+    <title>Create Post</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #4267B2;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #555;
+    }
+</style>
+
+
+<body>
+    <h1>Create Post</h1>
+    <form action="/create" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" required><br><br>
+
+        <label for="content">Content:</label><br>
+        <textarea name="content" id="content" rows="5" required></textarea><br><br>
+
+
+        <label for="catetype">Category:</label>
+        <select name="catetype" id="catetype">
+            <option value="">Select Category</option>
+            <option value="1">Category 1</option>
+            <option value="2">Category 2</option>
+            <option value="3">Category 3</option>
+            <!-- Add more options as needed -->
+        </select><br><br>
+
+        <input type="submit" value="Create Post">
+    </form>
+</body>
+</html>
+

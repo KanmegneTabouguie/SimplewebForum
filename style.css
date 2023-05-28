@@ -1,0 +1,69 @@
+ /* Add your CSS styles for the classic design here */
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+}
+.dashboard {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.dashboard h1, .dashboard p {
+    margin: 0;
+}
+.dashboard button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+h2 {
+    margin-top: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+select, input {
+    margin-bottom: 10px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+li h3 {
+    margin-top: 0;
+}
+.comments {
+    margin-top: 10px;
+}
+.comments li {
+    margin-bottom: 5px;
+}
+.post-actions {
+    margin-top: 10px;
+}
+.post-actions button {
+    margin-right: 10px;
+}
+.like-count, .dislike-count {
+    margin-left: 5px;
+    font-weight: bold;
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    
+    <style>
+      /* Add your CSS styles for the classic design here */
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f2f2f2;
+          margin: 0;
+          padding: 0;
+          background-color: #4267B2;
+      }
+      .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #d5d518;
+          
+      }
+      .dashboard {
+          display: flex;
+          flex-wrap: wrap;
+          background-color: #333;
+          color: #fff;
+          padding: 10px;
+          margin-bottom: 20px;
+      }
+      .dashboard h1, .dashboard p {
+          margin: 0;
+      }
+      .dashboard button {
+          background-color: #fff;
+          color: #333;
+          border: none;
+          padding: 5px 10px;
+          margin-top: 10px;
+          cursor: pointer;
+      }
+  
+      .rounded-button {
+border-radius: 20px;
+}
+
+.column {
+flex-basis: 33.33%;
+padding: 10px;
+box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+.column {
+  flex-basis: 100%;
+}
+}
+
+
+
+      h2 {
+          margin-top: 20px;
+      }
+      label {
+          display: block;
+          margin-bottom: 5px;
+      }
+      select, input {
+          margin-bottom: 10px;
+      }
+      ul {
+          list-style-type: none;
+          padding: 0;
+      }
+      li {
+          margin-bottom: 20px;
+          border: 1px solid #ccc;
+          padding: 10px;
+          background-color: #f9f9f9;
+      }
+      li h3 {
+          margin-top: 0;
+      }
+      .comments {
+          margin-top: 10px;
+      }
+      .comments li {
+          margin-bottom: 5px;
+      }
+      .post-actions {
+          margin-top: 10px;
+      }
+      .post-actions button {
+          margin-right: 10px;
+      }
+      .like-count, .dislike-count {
+          margin-left: 5px;
+          font-weight: bold;
+      }
+
+
+      .animated-text {
+animation-name: slideIn;
+animation-duration: 4s;
+animation-fill-mode: forwards;
+}
+
+@keyframes slideIn {
+0% {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+100% {
+  opacity: 1;
+  transform: translateY(0);
+}
+}
+
+
+
+@keyframes fadeIn {
+0% {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+100% {
+  opacity: 1;
+  transform: translateY(0);
+}
+}
+
+.dashboard .column {
+animation-name: fadeIn;
+animation-duration: 1s;
+animation-fill-mode: forwards;
+opacity: 0;
+}
+
+.dashboard .column:nth-child(1) {
+animation-delay: 0s;
+}
+
+.dashboard .column:nth-child(2) {
+animation-delay: 0.5s;
+}
+
+.dashboard .column:nth-child(3) {
+animation-delay: 1s;
+}
+
+
+.post-actions {
+display: flex;
+align-items: center;
+}
+
+
+.like-button,
+.dislike-button {
+background-color: transparent;
+border: none;
+padding: 0;
+cursor: pointer;
+display: flex;
+align-items: center;
+}
+
+.like-icon,
+.dislike-icon {
+width: 20px;
+height: 20px;
+margin-right: 5px;
+}
+
+.like-count,
+.dislike-count {
+margin-left: 5px;
+}
+
+.like-icon {
+fill: #3897f0;
+}
+
+.dislike-icon {
+fill: #ed4956;
+}
+
+
+.post-actions {
+display: flex;
+align-items: center;
+}
+
+
+
+</style>
+
+
+
+    <script>
+
+        function likePost(postId) {
+            var likeCountElement = document.getElementById('post_' + postId + '_likes');
+            var likeCount = parseInt(likeCountElement.textContent);
+            likeCount++;
+            likeCountElement.textContent = likeCount + ' Likes';
+
+            // Send a request to update the like count on the server-side
+            fetch('/like', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'post_id=' + postId
+            });
+        }
+
+        function dislikePost(postId) {
+            var dislikeCountElement = document.getElementById('post_' + postId + '_dislikes');
+            var dislikeCount = parseInt(dislikeCountElement.textContent);
+            dislikeCount++;
+            dislikeCountElement.textContent = dislikeCount + ' Dislikes';
+
+            // Send a request to update the dislike count on the server-side
+            fetch('/dislike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'post_id=' + postId
+            });
+        }
+
+        function filterPosts() {
+            var filterSelect = document.getElementById('filterSelect');
+            var filterValue = filterSelect.value;
+
+            var filterInput = document.getElementById('filterInput');
+            var filterNumber = parseInt(filterInput.value);
+
+            var posts = document.querySelectorAll('li');
+
+            posts.forEach(function(post) {
+                var likeCountElement = post.querySelector('.like-count');
+                var dislikeCountElement = post.querySelector('.dislike-count');
+
+                var likeCount = parseInt(likeCountElement.textContent);
+                var dislikeCount = parseInt(dislikeCountElement.textContent);
+
+                if (filterValue === 'all') {
+                    post.style.display = 'block';
+                } else if (filterValue === 'liked') {
+                    if (likeCount > filterNumber) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                } else if (filterValue === 'disliked') {
+                    if (dislikeCount > filterNumber) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                }
+            });
+        }
+   
+
+    </script>
+</head>
+<body>
+    <!-- Rest of the HTML code -->
+    <div class="container">
+        <div class="dashboard">
+<div class="column">
+    <h1 class="animated-text">Welcome, {{.Username}}!</h1>
+    <p>Your email: {{.Email}}</p>
+</div>
+<div class="column">
+    <a href="/create"><button class="rounded-button"><img src="https://cdn-icons-png.flaticon.com/128/2920/2920015.png" alt="Create Icon" width="50" height="50">Create a New Post</button></a>
+</div>
+<div class="column">
+    <form action="/logout" method="post">
+        <button type="submit" class="rounded-button"><img src="https://cdn-icons-png.flaticon.com/128/1432/1432552.png" alt="Logout Icon" width="50" height="50">Logout</button>
+    </form>
+    </div>
+</div>
+
+    <h2>Latest Posts:</h2>
+
+    <label for="filterSelect">Filter by:</label>
+    <select id="filterSelect" onchange="filterPosts()">
+        <option value="all">All</option>
+        <option value="liked">Liked</option>
+        <option value="disliked">Disliked</option>
+    </select>
+
+    <input type="number" id="filterInput" placeholder="Enter filter number" min="0" onchange="filterPosts()">
+
+
+    <ul>
+        {{range .Posts}}
+        <li>
+            <h3>{{.Title}}</h3>
+            <p>{{.Content}}</p>
+
+            <h4>Comments:</h4>
+            <ul class="comments">
+                {{range .Comments}}
+                <li>{{.Content}}</li>
+                {{end}}
+            </ul>
+
+            <form action="/comment" method="post">
+                <input type="hidden" name="post_id" value="{{.ID}}">
+                <textarea name="content" placeholder="Add a comment"></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
+
+            <div class="post-actions">
+                <button onclick="likePost('{{.ID}}')">Like</button>
+                <span id="post_{{.ID}}_likes">{{.LikeCount}} Likes</span>
+    
+                <button onclick="dislikePost('{{.ID}}')">Dislike</button>
+                <span id="post_{{.ID}}_dislikes">{{.DislikeCount}} Dislikes</span>
+        </div>
+        </li>
+        {{end}}
+    </ul>
+</div>
+</body>
+</html>
