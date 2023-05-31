@@ -192,6 +192,42 @@ align-items: center;
 
 
 
+
+.navbar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .columntype {
+        flex: 1;
+        text-align: center;
+    }
+
+    .rounded-buttonone {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .rounded-buttonone img {
+        margin-right: 10px;
+    }
+
+    .rounded-buttonone:hover {
+        transform: scale(1.1);
+    }
+
+
+
+
+
+
+
+
 </style>
 
 
@@ -230,40 +266,6 @@ align-items: center;
             });
         }
 
-        function filterPosts() {
-            var filterSelect = document.getElementById('filterSelect');
-            var filterValue = filterSelect.value;
-
-            var filterInput = document.getElementById('filterInput');
-            var filterNumber = parseInt(filterInput.value);
-
-            var posts = document.querySelectorAll('li');
-
-            posts.forEach(function(post) {
-                var likeCountElement = post.querySelector('.like-count');
-                var dislikeCountElement = post.querySelector('.dislike-count');
-
-                var likeCount = parseInt(likeCountElement.textContent);
-                var dislikeCount = parseInt(dislikeCountElement.textContent);
-
-                if (filterValue === 'all') {
-                    post.style.display = 'block';
-                } else if (filterValue === 'liked') {
-                    if (likeCount > filterNumber) {
-                        post.style.display = 'block';
-                    } else {
-                        post.style.display = 'none';
-                    }
-                } else if (filterValue === 'disliked') {
-                    if (dislikeCount > filterNumber) {
-                        post.style.display = 'block';
-                    } else {
-                        post.style.display = 'none';
-                    }
-                }
-            });
-        }
-   
 
     </script>
 </head>
@@ -278,23 +280,41 @@ align-items: center;
 <div class="column">
     <a href="/create"><button class="rounded-button"><img src="https://cdn-icons-png.flaticon.com/128/2920/2920015.png" alt="Create Icon" width="50" height="50">Create a New Post</button></a>
 </div>
+
+
+
 <div class="column">
     <form action="/logout" method="post">
         <button type="submit" class="rounded-button"><img src="https://cdn-icons-png.flaticon.com/128/1432/1432552.png" alt="Logout Icon" width="50" height="50">Logout</button>
     </form>
     </div>
+
+
+    <div class="navbar">
+        <div class="columntype">
+            <a href="/catetype" class="rounded-buttonone">
+                <img src="https://cdn-icons-png.flaticon.com/128/6724/6724239.png" alt="Create Icon" width="50" height="50">
+                Category1
+            </a>
+        </div>
+    
+        <div class="columntype">
+            <a href="/catetwo" class="rounded-buttonone">
+                <img src="https://cdn-icons-png.flaticon.com/128/6724/6724239.png" alt="Create Icon" width="50" height="50">
+                Category2
+            </a>
+        </div>
+    
+        <div class="columntype">
+            <a href="/catethree" class="rounded-buttonone">
+                <img src="https://cdn-icons-png.flaticon.com/128/6724/6724239.png" alt="Create Icon" width="50" height="50">
+                Category3
+            </a>
+        </div>
+    </div>
 </div>
 
-    <h2>Latest Posts:</h2>
-
-    <label for="filterSelect">Filter by:</label>
-    <select id="filterSelect" onchange="filterPosts()">
-        <option value="all">All</option>
-        <option value="liked">Liked</option>
-        <option value="disliked">Disliked</option>
-    </select>
-
-    <input type="number" id="filterInput" placeholder="Enter filter number" min="0" onchange="filterPosts()">
+    <h2>Recent Posts:</h2>
 
 
     <ul>
@@ -329,3 +349,4 @@ align-items: center;
 </div>
 </body>
 </html>
+

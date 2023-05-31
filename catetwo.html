@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forum</title>
+    <style>
+       body {
+          font-family: Arial, sans-serif;
+          background-color: #f2f2f2;
+          margin: 0;
+          padding: 0;
+          background-color: #4267B2;
+      }
+      .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #d5d518;
+          
+      }
+
+        h1 {
+            text-align: center;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .post p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .post .info {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .post .likes {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .post .dislikes {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .post .likes img,
+        .post .dislikes img,
+        .post .comments-section .comments-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .post .comments-section {
+            margin-top: 20px;
+        }
+
+        .post .comments-section .comments-icon {
+            display: inline-block;
+            background-image: url('https://cdn-icons-png.flaticon.com/128/106/106816.png');
+            background-size: cover;
+            cursor: pointer;
+        }
+
+        .post .comments-section .comments-list {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .post .comments-section .comments-list li {
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .post .comments-section .new-comment-form {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .post .comments-section .new-comment-form textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .post .comments-section .new-comment-form button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function toggleComments(commentSectionId) {
+            var commentsSection = document.getElementById(commentSectionId);
+            var newCommentForm = document.getElementById("form" + commentSectionId);
+            if (commentsSection.style.display === 'none') {
+                commentsSection.style.display = 'block';
+                newCommentForm.style.display = 'block';
+            } else {
+                commentsSection.style.display = 'none';
+                newCommentForm.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+    <h1>Forum</h1>
+    {{range .Posts}}
+        <div class="post">
+            <h2>{{.Title}}</h2>
+            <p>{{.Content}}</p>
+            <div class="info">
+                <span class="likes"><img src="https://cdn-icons-png.flaticon.com/128/7155/7155183.png" alt="Like Icon">{{.LikeCount}}</span>
+                <span class="dislikes"><img src="https://t4.ftcdn.net/jpg/06/05/67/47/240_F_605674785_9JI6o0xRcwzzaQFyiE3BXrB6WQlsmdTJ.jpg" alt="Dislike Icon">{{.DislikeCount}}</span>
+            </div>
+            <div class="comments-section">
+                <div class="comments-icon" onclick="toggleComments('comments{{.ID}}')"></div>
+                <span class="comment-label">Comments:</span>
+                <div id="comments{{.ID}}" class="comments-list">
+                    <ul>
+                        {{range .Comments}}
+                            <li>{{.Content}}</li>
+                        {{end}}
+                    </ul>
+                </div>
+                <form id="formcomments{{.ID}}" class="new-comment-form">
+                    <textarea name="comment" placeholder="Write a comment..."></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        </div>
+    {{end}}
+    </div>
+</body>
+</html>

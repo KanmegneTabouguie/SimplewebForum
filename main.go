@@ -84,6 +84,9 @@ func main() {
 	http.HandleFunc("/login", login(db))
 	http.HandleFunc("/", welcomeHandler)
 	http.HandleFunc("/readonly", readOnly)
+	http.HandleFunc("/catetype", catetype)
+	http.HandleFunc("/catetwo", catetwo)
+	http.HandleFunc("/catethree", catethree)
 	http.HandleFunc("/landingPageHandler", landingPageHandler)
 	http.HandleFunc("/servicePageHandler", servicePageHandler)
 	http.HandleFunc("/contactPageHandler", contactPageHandler)
@@ -95,7 +98,7 @@ func main() {
 
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/success", successHandler)
-	log.Fatal(http.ListenAndServe(":5799", nil))
+	log.Fatal(http.ListenAndServe(":3147", nil))
 }
 
 // function for the creation of table
@@ -439,6 +442,279 @@ func readOnly(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func catetype(w http.ResponseWriter, r *http.Request) {
+	// Connect to the SQLite database
+	db, err := sql.Open("sqlite3", "./data/forum.db")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Retrieve posts from the "posts" table where category_id is 1 in post_category_associations
+	rows, err := db.Query(`
+		SELECT p.id, p.title, p.content, p.like_count, p.dislike_count, c.content
+		FROM posts AS p
+		LEFT JOIN (
+			SELECT post_id, GROUP_CONCAT(content, '<br>') AS content
+			FROM comments
+			GROUP BY post_id
+		) AS c ON p.id = c.post_id
+		WHERE p.id IN (
+			SELECT pca.post_id
+			FROM post_category_associations AS pca
+			WHERE pca.category_id = 1
+		)
+	`)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	posts := []Post{}
+	for rows.Next() {
+		var postID int
+		var postTitle, postContent string
+		var likeCount, dislikeCount int
+		var commentContent sql.NullString
+
+		err := rows.Scan(&postID, &postTitle, &postContent, &likeCount, &dislikeCount, &commentContent)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		post := Post{
+			ID:           postID,
+			Title:        postTitle,
+			Content:      postContent,
+			LikeCount:    likeCount,
+			DislikeCount: dislikeCount,
+		}
+		if commentContent.Valid {
+			post.Comments = append(post.Comments, Comment{
+				Content: commentContent.String,
+			})
+		}
+		posts = append(posts, post)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Parse the template file
+	t, err := template.ParseFiles("category.html")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Create a context with the necessary data for the template
+	context := struct {
+		Posts []Post
+	}{
+		Posts: posts,
+	}
+
+	// Execute the template with the provided context
+	err = t.Execute(w, context)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+}
+
+func catetwo(w http.ResponseWriter, r *http.Request) {
+	// Connect to the SQLite database
+	db, err := sql.Open("sqlite3", "./data/forum.db")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Retrieve posts from the "posts" table where category_id is 1 in post_category_associations
+	rows, err := db.Query(`
+		SELECT p.id, p.title, p.content, p.like_count, p.dislike_count, c.content
+		FROM posts AS p
+		LEFT JOIN (
+			SELECT post_id, GROUP_CONCAT(content, '<br>') AS content
+			FROM comments
+			GROUP BY post_id
+		) AS c ON p.id = c.post_id
+		WHERE p.id IN (
+			SELECT pca.post_id
+			FROM post_category_associations AS pca
+			WHERE pca.category_id = 2
+		)
+	`)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	posts := []Post{}
+	for rows.Next() {
+		var postID int
+		var postTitle, postContent string
+		var likeCount, dislikeCount int
+		var commentContent sql.NullString
+
+		err := rows.Scan(&postID, &postTitle, &postContent, &likeCount, &dislikeCount, &commentContent)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		post := Post{
+			ID:           postID,
+			Title:        postTitle,
+			Content:      postContent,
+			LikeCount:    likeCount,
+			DislikeCount: dislikeCount,
+		}
+		if commentContent.Valid {
+			post.Comments = append(post.Comments, Comment{
+				Content: commentContent.String,
+			})
+		}
+		posts = append(posts, post)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Parse the template file
+	t, err := template.ParseFiles("catetwo.html")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Create a context with the necessary data for the template
+	context := struct {
+		Posts []Post
+	}{
+		Posts: posts,
+	}
+
+	// Execute the template with the provided context
+	err = t.Execute(w, context)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+}
+
+func catethree(w http.ResponseWriter, r *http.Request) {
+	// Connect to the SQLite database
+	db, err := sql.Open("sqlite3", "./data/forum.db")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Retrieve posts from the "posts" table where category_id is 1 in post_category_associations
+	rows, err := db.Query(`
+		SELECT p.id, p.title, p.content, p.like_count, p.dislike_count, c.content
+		FROM posts AS p
+		LEFT JOIN (
+			SELECT post_id, GROUP_CONCAT(content, '<br>') AS content
+			FROM comments
+			GROUP BY post_id
+		) AS c ON p.id = c.post_id
+		WHERE p.id IN (
+			SELECT pca.post_id
+			FROM post_category_associations AS pca
+			WHERE pca.category_id = 3
+		)
+	`)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	posts := []Post{}
+	for rows.Next() {
+		var postID int
+		var postTitle, postContent string
+		var likeCount, dislikeCount int
+		var commentContent sql.NullString
+
+		err := rows.Scan(&postID, &postTitle, &postContent, &likeCount, &dislikeCount, &commentContent)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		post := Post{
+			ID:           postID,
+			Title:        postTitle,
+			Content:      postContent,
+			LikeCount:    likeCount,
+			DislikeCount: dislikeCount,
+		}
+		if commentContent.Valid {
+			post.Comments = append(post.Comments, Comment{
+				Content: commentContent.String,
+			})
+		}
+		posts = append(posts, post)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Parse the template file
+	t, err := template.ParseFiles("catethree.html")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Create a context with the necessary data for the template
+	context := struct {
+		Posts []Post
+	}{
+		Posts: posts,
+	}
+
+	// Execute the template with the provided context
+	err = t.Execute(w, context)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+}
+
 func likeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -581,7 +857,7 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	// Insert the post into the "posts" table
-	stmt, err := db.Prepare("INSERT INTO posts (title, content) VALUES (?, ?)")
+	stmt, err := db.Prepare("INSERT INTO posts (title, content) VALUES (?, ? )")
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
